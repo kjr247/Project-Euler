@@ -1,35 +1,20 @@
-var oneMillion = 1000000;
-var startingNum = 13;
-var temp = 0;
-var one = 1;
-var chain = 0;
-var longestChain = 0;
+(function eul15(){ // simple 40 choose 20 algorithm to quickly find the total number of combinations
+  var start = Date.now();        
+    
+    function factorial(n){
+        var factorialValue = 1;
+        while (n > 1){
+            factorialValue *= n;
+            n -= 1;            
+        }
+        return factorialValue;
+    }
+     
+    function number_combinations(n, k){
+        var numberOfcombinations = factorial(n) / (factorial(k) * factorial(n - k));
+        return console.log(Date.now()-start, numberOfcombinations);
+    }  
 
+    number_combinations(40, 20);
 
-
-while(startingNum < oneMillion){     
-     temp = startingNum;     
-     chain = 0;
-     //if even divide by 2
-     while(temp >= one){
-          if(temp === 1){
-               break;
-          }
-          if(temp % 2 === 0){
-               temp = temp / 2;
-          } else {
-               temp = 3 * temp + 1;
-          }          
-          chain++;
-          if(chain >= longestChain && temp <= 1){
-               longestChain = chain;
-               console.log("longest chain: " + longestChain + " current starting number: " + startingNum);
-          }
-          
-     }
-     if(startingNum === oneMillion){
-          console.log("finish starting number: " + startingNum);
-          break;
-     }
-     startingNum++;
-}
+}());

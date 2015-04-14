@@ -1,35 +1,30 @@
-(function eul12(){
-     var maxDivisor = 0;
+     console.log("start");
      var divisors = 0;
-     var overFiveHundred = 501; //will need to be greater than or equal to 501
-     
-     function createSeries(){
-          var i = 0;
-          var series = [];
-          while(i <= overFiveHundred){
-               series.push(i);
+     var maxDivisors = 0;
+     var tri = 1;
+     var inc = 1;
+     var div = 0;
+     var remainder = 0;
+     var i = 1;
+     while (maxDivisors <= 501){
+          inc++;
+          tri += inc;
+          div = 0;                    
+          i = 2;
+          while(i < 76576500){
+               if(76576500 % i === 0){
+                    div++;
+                    console.log(tri +  " div count is: "+ div + " " + maxDivisors);
+                    
+                    if(div > maxDivisors){
+                         maxDivisors = div;
+                        if(maxDivisors >= 501){
+                            break;
+                        }
+                    }
+               }
                i++;
-          }
-          console.log( "series: " + series);
-          return series;
+          }          
      }
-     
-     function createTriangles(series){
-          var tri = 0;
-          var trianlges = [];
-          while(i < series.length){
-               tri += series[i];
-               i++;
-          }
-          triangles.push(tri);
-          console.log("triangles: " + triangles);
-          return triangles;
-     }
-     
-     function findMaxDivisors(){
-          
-     }
-     
-     console.log("maxDivisors: " + maxDivisors);
-     return maxDivisors;
-}());
+     console.log("maxDivisors: " + maxDivisors);    
+     console.log("finish");

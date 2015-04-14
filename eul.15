@@ -1,0 +1,46 @@
+(function eul15(){
+    var rows = 10;
+    var cols = 10;
+    var myArr = [];    
+    
+    (function makeGrid(){        
+        //create multi dimensional array
+        for(var i = 0; i < rows; i++){
+            myArr.push( [] );
+        }
+        console.log(myArr);
+    }());
+    
+    (function parseGrid(){
+        var y = 0; // used for cols
+        var x = 0; // used for rows
+        var z = 0; // used to fill breadcrumbs
+        var a = 0; // used to parse down the grid
+        var b = 0; // must parse right again
+        var i = 0; // this is used to decrement how far we will go until we change direction
+        var q = 0; // used to decrement the down parsing
+        var lastRight = 0; //used to keep track of where to continue going 
+        var lastDown = 0;
+        while
+        //parse the arrays and populate with a breadcrumbs showing the previous route
+        for(var x = 0; x < rows ; x++){                     //rows
+            z = 0;
+            for(var y = 0; y <= myArr.length; y++){         //cols right                
+                myArr[y][x] = z + " route ";
+                z++;
+            }      
+
+            z = 0
+            for(a = 0; a <= myArr.length;a++){              //rows down //need to find where to inc q
+                y = myArr.length-q;
+                myArr[y][x] = z + " route "
+                z++;
+            }
+
+
+        }
+        console.log(myArr)
+    }());
+    
+    
+}());
