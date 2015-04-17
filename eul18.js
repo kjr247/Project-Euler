@@ -19,96 +19,113 @@ var TRIANGLE = [['75', '0'],
 
       var arrOfDigits =  stringer.split(" ");
 
-	var G = {            
-	      V:{
-	            0: {
-                        u: "" ,
-                        color: "white",
-                        pred: "", d: "75",
-                        fin: "" ,
-                        adjChildren: {
-                              first: "",
-                              second: "" 
-                        } 
-                  },
-                  1: {
-                        u: "" ,
-                        color: "white",
-                        pred: "", d: "75",
-                        fin: "" ,
-                        adjChildren: {
-                              first: "",
-                              second: "" 
-                        } 
+  var G = {            
+            0: {
+                  u: "" ,
+                  color: "white",
+                  pred: "", 
+                  d: "75",
+                  fin: "" ,
+                  adjChildren: { 
+                        0: {                                          
+                              leftchild: {value: "", index: "", color: "white"},                                    
+                              rightchild: {value: "", index: "", color: "white"},                        
+                        }
                   }
-	      }
-	}
+            }      
+  }
 
-
-	//populate the object!
+  //populate the object!
       var count = 0;
       for( i in arrOfDigits ){
-       G.V[count] = {u: Number(arrOfDigits[i]) , color: "white", pred: "nil", d : Number(arrOfDigits[i]), fin: "nil", adjChildren: { first: null, second: null } };
-       count++;
+        G[count] = {
+                        u: Number(arrOfDigits[i]),
+                        color: "white",
+                        pred: "nil",
+                        d : Number(arrOfDigits[i]),
+                        fin: "nil",
+                        adjChildren: {}
+                        }       
+       count++;            
       }
       console.log(G);      
-
-	function DFS(G){            
+  function DFS(G){            
+            var max = 0;
             var dist = 0;
             Adj(G);            
-            for(var u in G.V){                            
-                  if (G.V[u].color === "white"){
-                        //console.log("the if is now working");
-                        DFSVisit(G, u, dist);
+            for(var u in G){                            
+                  if (G[u].color === "white"){
+                        var dist = 0;
+                        console.log("DFS call color is white for: " + G[u].u);
+                        DFSVisit(G, u, max, dist);
                   }
             }
             console.log(G, "finished");
             return G;            
       }
 
-      function DFSVisit(G, u, dist){
-            //console.log("we are in DFSVisit");            
-            //alert("success we are in DFSVisit");
-	      dist = dist + G.V[u].d;                        
-	      G.V[u].d = dist;
-	      G.V[u].color = "gray";   
-            var first = G.V[u].adjChildren.first;
-            var second = G.V[u].adjChildren.first;
-            var Arr = [];
-            Arr.push(first);
-            Arr.push(second); 
-	      for(var v in Arr){ 
-                  //console.log(Adj(G));
-	            if(G.V[v].color === "white"){
-	                  G.V[v].pred = G.V[u].u;
-	                  DFSVisit(G, v, dist);
-	            }
-	      }
-	      u.color = "black";
-	      dist = dist + G.V[u].d;
-	      G.V[u].fin = dist;
+      function DFSVisit(G, u, max, dist){          
+        //G[u].color = "gray";   
+            //console.log("set " + G[u].u + " to " + G[u].color);
+            
+            if(G[u].adjChildren.leftchild !== null && G[u].adjChildren.leftchild !== null){
+                  console.log("Visit u: " + G[u].u);
+                  //console.log("first and second childred: " + G..adjChildren.leftchild, G..adjChildren.rightchild);
+                  for(var v = 0; v<=1; v++){   
+                        console.log(G[u].adjChildren[v]);
+                        console.log("v.index: " + G[u].adjChildren[v].index)
+                        console.log(dist);
+                        console.log("check to see if " + G[u].adjChildren[v].value + " is white!?!?!?" + G[u].adjChildren[v].color);
+                        if(G[u].adjChildren[v].color === "white"){
+                              console.log("white: call DFSVISIT with v: " + G[u].adjChildren[v].value);
+                              //console.log(G[v].u);                                                
+                              //G[u].pred = G[u].u; 
+                              console.log("v: " + v);
+                              DFSVisit(G, v, max, dist);
+                        }
+                        //G[u].adjChildren[v].color = "black";
+                        //console.log(G[u].u,G[v].adjChildren.first);
+                        //G[v].d += G[u].d
+                        //G[u].fin = dist;
+                        //findMax                              
+                  }  
+            }
+    console.log("return from DFSVISIT");          
           return G;
-	}
+  }
 
-      function Adj(G){	                        
+      function Adj(G){        
+            var i = 0;
+            var count = 0;
             for(var u = 0; u < 104; u++){ // while we still have children left    
                   for(var y = 1 ; y < 15; y++){
-                        if(G.V[u].u === 0 || Number(TRIANGLE[y][y+2]) === 0){ break;}
+                        if(G[u].u === 0 || Number(TRIANGLE[y][y+2]) === 0){ break;}
                         for(var x = 0 ; x < 15; x++){
-                              if(G.V[u].u === 0 || Number(TRIANGLE[y][x+1]) === 0){ break;}
-                              //console.log(G.V[u].u,Number(TRIANGLE[y][x]),Number(TRIANGLE[y][x+1]));
-
-                              G.V[u].adjChildren.first = Number(TRIANGLE[y][x]);
-                              G.V[u].adjChildren.second = Number(TRIANGLE[y][x+1]);   
-                              //var Arr = [];
-                              //Arr.push(Number(TRIANGLE[y][x]));
-                              //Arr.push(Number(TRIANGLE[y][x+1]));                  
-                              //console.log(Number(TRIANGLE[y][x]) + " " + Number(TRIANGLE[y][x+1]) + " " + " ARE THE CHILDREN OF: " + G.V[u].u);   
+                              if(G[u].u === 0 || Number(TRIANGLE[y][x+1]) === 0){ break;}
+                              //console.log(G[u].u,Number(TRIANGLE[y][x]),Number(TRIANGLE[y][x+1]));  
+                              G[count].adjChildren = {                                          
+                                  leftchild: {value: "", index: "", color: "white"},                                    
+                                  rightchild: {value: "", index: "", color: "white"},
+                              }
+                              G[u].adjChildren.leftchild.value = Number(TRIANGLE[y][x]);
+                              G[u].adjChildren.rightchild.value = Number(TRIANGLE[y][x+1]);   
+                              G[u].adjChildren.leftchild.index = i+1; // set the indexes for reference
+                              G[u].adjChildren.rightchild.index = i+2; 
+                              var Arr = [];
+                              Arr.push(Number(TRIANGLE[y][x]));
+                              Arr.push(Number(TRIANGLE[y][x+1]));                  
+                              //console.log(Number(TRIANGLE[y][x]) + " " + Number(TRIANGLE[y][x+1]) + " " + " ARE THE CHILDREN OF: " + G[u].u);          
                               u++;                              
+                              i++; 
+                              count++
                         }
-                  }                  
+                        i++;
+                  }
+                  
+                  console.log(G);
             }
-            return /*Arr*/;
+            return ;
       }
+
 
 DFS(G);
